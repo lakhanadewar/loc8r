@@ -1,0 +1,36 @@
+{
+    "name": "Loc8r",
+    "version": "1.0",
+    "manifest_version": 3,
+    "description": "Advanced Element Locator Tool",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": [
+        "contextMenus",
+        "tabs",
+        "scripting",
+        "notifications",
+        "activeTab",
+        "storage",
+        "geolocation"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        }
+    },
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "devtools_page": "devtools.html"
+}

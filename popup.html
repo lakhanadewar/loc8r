@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loc8r - Element Locator Tool</title>
+    <style>
+        body {
+            width: 300px;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .section h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .button {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .button:last-child {
+            margin-bottom: 0;
+        }
+
+        .button.primary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-weight: 600;
+        }
+
+        .button.primary:hover {
+            background: white;
+        }
+
+        .shortcuts {
+            font-size: 11px;
+            opacity: 0.7;
+            line-height: 1.4;
+        }
+
+        .shortcut-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3px;
+        }
+
+        .key {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .status {
+            text-align: center;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .status.active {
+            background: rgba(76, 175, 80, 0.3);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+        }
+
+        .status.inactive {
+            background: rgba(158, 158, 158, 0.3);
+            border: 1px solid rgba(158, 158, 158, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">🎯 Loc8r</div>
+        <div class="subtitle">Element Locator Tool</div>
+    </div>
+
+    <div id="status" class="status inactive">
+        Inspector: Inactive
+    </div>
+
+    <div class="section">
+        <h3>Inspector Mode</h3>
+        <button id="toggleInspector" class="button primary">
+            Activate Inspector
+        </button>
+        <p style="font-size: 11px; margin: 8px 0 0 0; opacity: 0.8;">
+            Click elements to extract selectors and view information in console.
+        </p>
+    </div>
+
+    <div class="section">
+        <h3>Quick Actions</h3>
+        <button id="clearConsole" class="button">Clear Console</button>
+        <button id="openDevTools" class="button">Open DevTools</button>
+    </div>
+
+    <div class="section">
+        <h3>Available Selectors</h3>
+        <div style="font-size: 11px; opacity: 0.8; line-height: 1.4;">
+            • ID Selector<br>
+            • Name Attribute<br>
+            • Class Names<br>
+            • CSS Selector<br>
+            • XPath (Relative)<br>
+            • XPath (Absolute)<br>
+            • JavaScript Path<br>
+            • Text Content
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>Keyboard Shortcuts</h3>
+        <div class="shortcuts">
+            <div class="shortcut-item">
+                <span>Toggle Inspector</span>
+                <span class="key">Ctrl+Shift+L</span>
+            </div>
+            <div class="shortcut-item">
+                <span>Deactivate</span>
+                <span class="key">Escape</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>How to Use</h3>
+        <div style="font-size: 11px; opacity: 0.8; line-height: 1.4;">
+            1. Right-click any element → Loc8r menu<br>
+            2. Or activate inspector and click elements<br>
+            3. Check console for detailed information<br>
+            4. Selectors are automatically copied
+        </div>
+    </div>
+
+    <script src="popup_js.js"></script>
+</body>
+</html>

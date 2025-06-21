@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loc8r DevTools Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 5px;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .button.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .button.secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .button.secondary:hover {
+            background: #e0e0e0;
+            transform: translateY(-1px);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-indicator.active {
+            background: #4caf50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+
+        .status-indicator.inactive {
+            background: #9e9e9e;
+        }
+
+        .element-info {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #495057;
+            min-width: 120px;
+        }
+
+        .info-value {
+            flex: 1;
+            margin: 0 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .copy-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 40px;
+        }
+
+        .selector-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .selector-item {
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .selector-type {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+
+        .selector-value {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #212529;
+            word-break: break-all;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .feature-card {
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-radius: 8px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .feature-desc {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">🎯 Loc8r</div>
+        <div class="subtitle">Advanced Element Locator Tool</div>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <h3>Inspector Controls</h3>
+            <div class="controls">
+                <button id="toggleInspector" class="button primary">
+                    <span class="status-indicator inactive" id="statusIndicator"></span>
+                    Activate Inspector
+                </button>
+                <button id="clearResults" class="button secondary">Clear Results</button>
+                <button id="exportResults" class="button secondary">Export Selectors</button>
+            </div>
+            <div style="font-size: 13px; color: #666; line-height: 1.4;">
+                <strong>Instructions:</strong> Activate the inspector and click on any element in the page to extract all available selectors. Use keyboard shortcut <code>Ctrl+Shift+L</code> to toggle inspector mode.
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Current Element</h3>
+            <div id="currentElement" class="empty-state">
+                No element selected. Activate inspector and click on an element.
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Available Selectors</h3>
+            <div id="selectorsList" class="empty-state">
+                Select an element to view its selectors.
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Features</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-title">🎯 Multi-Selector Support</div>
+                    <div class="feature-desc">Generate CSS selectors, XPath (relative & absolute), JavaScript paths, and more.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">⚡ Real-time Inspector</div>
+                    <div class="feature-desc">Visual element highlighting with click-to-select functionality.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">📋 One-Click Copy</div>
+                    <div class="feature-desc">Instantly copy any selector to clipboard with context menu or buttons.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-title">🔧 Developer Friendly</div>
+                    <div class="feature-desc">Detailed element information logged to console for debugging.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="panel.js"></script>
+</body>
+</html>
