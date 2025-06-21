@@ -81,12 +81,15 @@ class Loc8rPanel {
     const button = document.getElementById('toggleInspector');
     const indicator = document.getElementById('statusIndicator');
 
+    if (!button || !indicator) return;
+
     if (this.isInspectorActive) {
-      button.textContent = '⏹️ Deactivate Inspector';
+      button.childNodes[1] && (button.childNodes[1].textContent = 'Deactivate Inspector');
       indicator.className = 'status-indicator active';
+      button.lastChild.textContent = 'Deactivate Inspector';
     } else {
-      button.innerHTML = '<span class="status-indicator inactive" id="statusIndicator"></span>Activate Inspector';
       indicator.className = 'status-indicator inactive';
+      button.lastChild.textContent = 'Activate Inspector';
     }
   }
 
@@ -141,11 +144,20 @@ class Loc8rPanel {
 
     const data = this.currentElementData;
     const selectors = [
+      { type: 'ID', value: data.id },
+      { type: 'Name', value: data.name },
+      { type: 'Class', value: data.className },
+      { type: 'Text Content', value: data.textContent },
       { type: 'CSS Selector', value: data.cssSelector },
       { type: 'XPath (Relative)', value: data.xpath },
       { type: 'XPath (Absolute)', value: data.absoluteXPath },
       { type: 'JavaScript Path', value: data.jsPath }
-    ];
+    ].filter(sel => sel.value && sel.value !== 'N/A');
+
+    if (selectors.length === 0) {
+      container.innerHTML = '<div class="empty-state">No selectors available for this element.</div>';
+      return;
+    }
 
     const selectorItems = selectors.map(selector => `
       <div class="selector-item">

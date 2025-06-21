@@ -311,6 +311,7 @@ class Loc8r {
     const info = {
       tagName: element.tagName.toLowerCase(),
       id: element.id || 'N/A',
+      name: element.getAttribute('name') || 'N/A',
       className: element.className || 'N/A',
       textContent: element.textContent?.trim().substring(0, 50) || 'N/A',
       cssSelector: this.generateCSSSelector(element),
@@ -318,6 +319,12 @@ class Loc8r {
       absoluteXPath: this.generateAbsoluteXPath(element),
       jsPath: this.generateJSPath(element)
     };
+    
+    // Send element info to DevTools panel
+    chrome.runtime.sendMessage({
+      action: 'elementSelected',
+      data: info
+    });
     
     console.group('🎯 Loc8r - Element Information');
     console.log('Element:', element);
