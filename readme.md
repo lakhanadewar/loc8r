@@ -144,14 +144,6 @@ This project is open source and available under the MIT License.
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
-
-## 📞 Support
-
-If you encounter any issues or have questions:
-1. Check the troubleshooting section above
-2. Open an issue on the project repository
-3. Make sure you're using a supported browser version
-
 ---
 
 **Happy element locating! 🎯**
